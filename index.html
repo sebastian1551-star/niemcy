@@ -3,55 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repozytorium Ustaw PL/DE</title>
+    <title>Ustawy PL/DE</title>
     <style>
-        :root { --pl: #eb4d4b; --de: #2d3436; --bg: #f1f2f6; --accent: #27ae60; }
+        :root { --pl: #eb4d4b; --de: #2d3436; --bg: #f1f2f6; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        .wrapper { width: 100%; max-width: 750px; }
+        .wrapper { width: 100%; max-width: 700px; } /* Zagnieżdżenie - kafelki blisko siebie */
         
-        /* Panel akcji */
-        .actions-panel { display: flex; gap: 8px; margin-bottom: 10px; position: sticky; top: 0; background: var(--bg); z-index: 10; padding: 5px 0; }
-        .refresh-btn { background: var(--accent); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-size: 11px; cursor: pointer; font-weight: bold; white-space: nowrap; }
-        .search-input { flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 13px; }
+        .sticky-header { position: sticky; top: 0; background: var(--bg); padding-bottom: 10px; z-index: 10; width: 100%; }
+        .search-bar { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 13px; box-sizing: border-box; }
+        
+        .proc-bar { background: #2d3436; color: #fff; font-size: 9px; padding: 6px; border-radius: 4px; margin: 8px 0; }
+        .proc-row { white-space: nowrap; overflow-x: auto; margin-bottom: 2px; }
 
-        /* Schemat Legislacyjny */
-        .proc-bar { background: #2d3436; color: #fff; font-size: 9px; padding: 8px; border-radius: 6px; margin-bottom: 15px; }
-        .proc-row { display: flex; align-items: center; gap: 4px; overflow-x: auto; padding-bottom: 4px; }
-        .step { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 3px; border-left: 2px solid var(--pl); }
-        .de-step { border-left-color: #fff; }
-
-        /* Pary Ustaw */
-        .pair-row { display: grid; grid-template-columns: 1fr 30px 1fr; align-items: stretch; background: white; border-radius: 8px; margin-bottom: 10px; padding: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
-        .m-card { padding: 8px; display: flex; flex-direction: column; }
+        .pair-row { 
+            display: grid; grid-template-columns: 1fr 35px 1fr; align-items: stretch; 
+            background: white; border-radius: 8px; margin-bottom: 8px; padding: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .m-card { padding: 6px; display: flex; flex-direction: column; justify-content: center; }
         .m-card.pl { border-left: 3px solid var(--pl); }
         .m-card.de { border-left: 3px solid var(--de); }
-        
+
         .auth { font-size: 8px; color: #aaa; text-transform: uppercase; font-weight: bold; }
-        h3 { font-size: 11px; margin: 3px 0; color: #222; }
-        .focus-text { font-size: 10px; color: #444; line-height: 1.3; flex-grow: 1; }
+        h3 { font-size: 11px; margin: 2px 0; color: #222; }
+        .focus-text { font-size: 10px; color: #444; line-height: 1.2; }
         .focus-text b { color: #d63031; background: #fff5f5; padding: 0 2px; }
 
-        .btn-dl { font-size: 10px; color: #0984e3; text-decoration: none; font-weight: bold; margin-top: 8px; display: inline-block; }
-        .arrow-box { display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 14px; }
+        .btn-link { font-size: 10px; color: #0984e3; text-decoration: none; font-weight: bold; margin-top: 5px; border: 1px solid #0984e3; padding: 2px 5px; border-radius: 3px; width: fit-content; }
+        .arrow { display: flex; align-items: center; justify-content: center; color: #0984e3; font-size: 14px; opacity: 0.5; }
 
         @media (max-width: 500px) {
             .pair-row { grid-template-columns: 1fr; }
-            .arrow-box { height: 15px; transform: rotate(90deg); }
+            .arrow { height: 15px; transform: rotate(90deg); }
         }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
-    <div class="actions-panel">
-        <input type="text" id="q" class="search-input" placeholder="🔍 Szukaj..." onkeyup="filter()">
-        <button class="refresh-btn" onclick="refreshLaws()" id="refBtn">🔄 Odśwież źródła</button>
-    </div>
-
-    <div class="proc-bar">
-        <div class="proc-row"><b>PL:</b> <span class="step">Sejm</span> ⮕ <span class="step">Senat</span> ⮕ <span class="step">Prezydent</span> ⮕ <span class="step">Dz.U.</span></div>
-        <div style="height: 5px;"></div>
-        <div class="proc-row"><b>DE:</b> <span class="step de-step">Bundestag</span> ⮕ <span class="step de-step">Bundesrat</span> ⮕ <span class="step de-step">Präsident</span> ⮕ <span class="step de-step">BGBl.</span></div>
+    <div class="sticky-header">
+        <input type="text" id="q" class="search-bar" placeholder="🔍 Szukaj..." onkeyup="filter()">
+        <div class="proc-bar">
+            <div class="proc-row">🇵🇱 <b>PL:</b> Sejm ⮕ Senat ⮕ Prezydent ⮕ Dz.U.</div>
+            <div class="proc-row">🇩🇪 <b>DE:</b> Bundestag ⮕ Bundesrat ⮕ Prezydent ⮕ BGBl.</div>
+        </div>
     </div>
 
     <div id="list">
@@ -59,47 +54,37 @@
             <div class="m-card pl">
                 <span class="auth">Sejm RP</span>
                 <h3>Ustawa o odpadach (2012)</h3>
-                <div class="focus-text">Obowiązkowa <b>ewidencja BDO</b> i kontrola strumienia.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-dl">📄 PDF (ISAP)</a>
+                <div class="focus-text">Ewidencja <b>BDO</b>.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-link">📄 PDF (ISAP)</a>
             </div>
-            <div class="arrow-box">⇆</div>
+            <div class="arrow">↔️</div>
             <div class="m-card de">
                 <span class="auth">Bundestag</span>
-                <h3>KrWG (Obieg zamknięty)</h3>
-                <div class="focus-text">Nacisk na <b>surowce wtórne</b> i zapobieganie.</div>
-                <a href="https://www.gesetze-im-internet.de/krwg/BJNR062110012.html" target="_blank" class="btn-dl">📄 Gesetze (DE)</a>
+                <h3>KrWG (Odpady)</h3>
+                <div class="focus-text">Odzysk <b>surowców</b>.</div>
+                <a href="https://www.gesetze-im-internet.de/krwg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
             </div>
         </div>
 
         <div class="pair-row">
             <div class="m-card pl">
                 <span class="auth">Sejm RP</span>
-                <h3>Gospodarka Opakowaniami</h3>
-                <div class="focus-text">System <b>opłat produktowych</b> (2013).</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf" target="_blank" class="btn-dl">📄 PDF (ISAP)</a>
+                <h3>Gosp. Opakowaniami (2013)</h3>
+                <div class="focus-text">Opłaty <b>produktowe</b>.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf" target="_blank" class="btn-link">📄 PDF (ISAP)</a>
             </div>
-            <div class="arrow-box">⇆</div>
+            <div class="arrow">↔️</div>
             <div class="m-card de">
                 <span class="auth">Bundestag</span>
                 <h3>VerpackG (Opakowania)</h3>
-                <div class="focus-text">Rejestr <b>LUCID</b> i wysoka kaucja (Pfand).</div>
-                <a href="https://www.gesetze-im-internet.de/verpackg/BJNR226210017.html" target="_blank" class="btn-dl">📄 Gesetze (DE)</a>
+                <div class="focus-text">Rejestr <b>LUCID</b> i kaucje.</div>
+                <a href="https://www.gesetze-im-internet.de/verpackg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function refreshLaws() {
-        const btn = document.getElementById('refBtn');
-        const now = new Date().toLocaleDateString();
-        btn.innerHTML = "⌛ Sprawdzam...";
-        setTimeout(() => {
-            btn.innerHTML = "✅ Stan na " + now;
-            btn.style.background = "#2ecc71";
-        }, 1000);
-    }
-
     function filter() {
         let val = document.getElementById('q').value.toLowerCase();
         let rows = document.getElementsByClassName('pair-row');
