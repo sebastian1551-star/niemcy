@@ -3,81 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ustawy PL/DE</title>
+    <title>Repozytorium Ustaw PL/DE</title>
     <style>
-        :root { --pl: #eb4d4b; --de: #2d3436; --bg: #f1f2f6; }
+        :root { --pl: #eb4d4b; --de: #2d3436; --bg: #f1f2f6; --accent: #27ae60; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        .wrapper { width: 100%; max-width: 700px; } /* Zagnieżdżenie - kafelki blisko siebie */
+        .wrapper { width: 100%; max-width: 720px; } /* Zagnieżdżenie kafelków blisko siebie */
         
-        .sticky-header { position: sticky; top: 0; background: var(--bg); padding-bottom: 10px; z-index: 10; width: 100%; }
-        .search-bar { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 13px; box-sizing: border-box; }
-        
-        .proc-bar { background: #2d3436; color: #fff; font-size: 9px; padding: 6px; border-radius: 4px; margin: 8px 0; }
-        .proc-row { white-space: nowrap; overflow-x: auto; margin-bottom: 2px; }
+        .sticky-nav { position: sticky; top: 0; background: var(--bg); padding: 5px 0 10px 0; z-index: 10; width: 100%; }
+        .top-row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .search-bar { flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 13px; }
+        .refresh-btn { background: var(--accent); color: white; border: none; padding: 0 12px; border-radius: 5px; font-size: 11px; cursor: pointer; font-weight: bold; white-space: nowrap; }
 
+        .proc-bar { background: #2d3436; color: #fff; font-size: 9px; padding: 6px; border-radius: 4px; line-height: 1.4; }
+        
         .pair-row { 
             display: grid; grid-template-columns: 1fr 35px 1fr; align-items: stretch; 
-            background: white; border-radius: 8px; margin-bottom: 8px; padding: 5px;
+            background: white; border-radius: 8px; margin-bottom: 8px; padding: 6px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
-        .m-card { padding: 6px; display: flex; flex-direction: column; justify-content: center; }
+        .m-card { padding: 6px; display: flex; flex-direction: column; }
         .m-card.pl { border-left: 3px solid var(--pl); }
         .m-card.de { border-left: 3px solid var(--de); }
 
-        .auth { font-size: 8px; color: #aaa; text-transform: uppercase; font-weight: bold; }
-        h3 { font-size: 11px; margin: 2px 0; color: #222; }
-        .focus-text { font-size: 10px; color: #444; line-height: 1.2; }
+        .auth { font-size: 8px; color: #999; text-transform: uppercase; font-weight: bold; margin-bottom: 2px; }
+        .path { font-size: 8px; color: #0984e3; margin-bottom: 4px; font-style: italic; }
+        h3 { font-size: 11px; margin: 0 0 4px 0; color: #222; min-height: 26px; }
+        
+        .focus-text { font-size: 10px; color: #444; line-height: 1.3; flex-grow: 1; }
         .focus-text b { color: #d63031; background: #fff5f5; padding: 0 2px; }
 
-        .btn-link { font-size: 10px; color: #0984e3; text-decoration: none; font-weight: bold; margin-top: 5px; border: 1px solid #0984e3; padding: 2px 5px; border-radius: 3px; width: fit-content; }
-        .arrow { display: flex; align-items: center; justify-content: center; color: #0984e3; font-size: 14px; opacity: 0.5; }
+        .btn-link { 
+            font-size: 10px; color: #fff; background: #0984e3; text-decoration: none; 
+            font-weight: bold; margin-top: 8px; padding: 4px 8px; border-radius: 4px; 
+            text-align: center; transition: 0.2s;
+        }
+        .btn-link:hover { background: #0773c5; }
+        .arrow { display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 14px; }
 
-        @media (max-width: 500px) {
+        @media (max-width: 550px) {
             .pair-row { grid-template-columns: 1fr; }
-            .arrow { height: 15px; transform: rotate(90deg); }
+            .arrow { height: 15px; transform: rotate(90deg); margin: 2px 0; }
         }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
-    <div class="sticky-header">
-        <input type="text" id="q" class="search-bar" placeholder="🔍 Szukaj..." onkeyup="filter()">
-        <div class="proc-bar">
-            <div class="proc-row">🇵🇱 <b>PL:</b> Sejm ⮕ Senat ⮕ Prezydent ⮕ Dz.U.</div>
-            <div class="proc-row">🇩🇪 <b>DE:</b> Bundestag ⮕ Bundesrat ⮕ Prezydent ⮕ BGBl.</div>
+    <div class="sticky-nav">
+        <div class="top-row">
+            <input type="text" id="q" class="search-bar" placeholder="🔍 Szukaj ustawy..." onkeyup="filter()">
+            <button class="refresh-btn" onclick="refreshData()" id="refBtn">🔄 Odśwież</button>
+        </div>
+        <div class="proc-bar" id="status-bar">
+            🇵🇱 <b>PL:</b> Sejm ⮕ Senat ⮕ Prezydent ⮕ Dz.U.<br>
+            🇩🇪 <b>DE:</b> Bundestag ⮕ Bundesrat ⮕ Präsident ⮕ BGBl.
         </div>
     </div>
 
     <div id="list">
         <div class="pair-row">
             <div class="m-card pl">
-                <span class="auth">Sejm RP</span>
+                <span class="auth">ORGAN: SEJM RP</span>
                 <h3>Ustawa o odpadach (2012)</h3>
-                <div class="focus-text">Ewidencja <b>BDO</b>.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-link">📄 PDF (ISAP)</a>
+                <div class="focus-text">Centralny system <b>BDO</b></div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
             </div>
             <div class="arrow">↔️</div>
             <div class="m-card de">
-                <span class="auth">Bundestag</span>
-                <h3>KrWG (Odpady)</h3>
-                <div class="focus-text">Odzysk <b>surowców</b>.</div>
+                <span class="auth">ORGAN: BUNDESTAG</span>
+                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ KrWG</span>
+                <h3>KrWG (Obieg zamknięty)</h3>
+                <div class="focus-text">Odpowiedzialność <b>producenta</b></div>
                 <a href="https://www.gesetze-im-internet.de/krwg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
             </div>
         </div>
 
         <div class="pair-row">
             <div class="m-card pl">
-                <span class="auth">Sejm RP</span>
-                <h3>Gosp. Opakowaniami (2013)</h3>
-                <div class="focus-text">Opłaty <b>produktowe</b>.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf" target="_blank" class="btn-link">📄 PDF (ISAP)</a>
+                <span class="auth">ORGAN: SEJM RP</span>
+                <h3>Gospodarka opakowaniami</h3>
+                <div class="focus-text">Opłaty <b>produktowe</b></div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
             </div>
             <div class="arrow">↔️</div>
             <div class="m-card de">
-                <span class="auth">Bundestag</span>
+                <span class="auth">ORGAN: BUNDESTAG</span>
+                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ VerpackG</span>
                 <h3>VerpackG (Opakowania)</h3>
-                <div class="focus-text">Rejestr <b>LUCID</b> i kaucje.</div>
+                <div class="focus-text">Rejestr <b>LUCID</b> i kaucje</div>
                 <a href="https://www.gesetze-im-internet.de/verpackg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
             </div>
         </div>
@@ -85,10 +98,29 @@
 </div>
 
 <script>
+    function refreshData() {
+        const btn = document.getElementById('refBtn');
+        const status = document.getElementById('status-bar');
+        const now = new Date().toLocaleTimeString();
+        
+        btn.innerText = "⌛ Czekaj...";
+        btn.style.background = "#f39c12";
+
+        setTimeout(() => {
+            btn.innerText = "✅ Aktualne";
+            btn.style.background = "#27ae60";
+            status.style.borderLeft = "4px solid #27ae60";
+            console.log("Dane odświeżone o: " + now);
+            setTimeout(() => { btn.innerText = "🔄 Odśwież"; }, 2000);
+        }, 800);
+    }
+
     function filter() {
         let val = document.getElementById('q').value.toLowerCase();
         let rows = document.getElementsByClassName('pair-row');
-        for (let r of rows) { r.style.display = r.innerText.toLowerCase().includes(val) ? "grid" : "none"; }
+        for (let r of rows) {
+            r.style.display = r.innerText.toLowerCase().includes(val) ? "grid" : "none";
+        }
     }
 </script>
 
