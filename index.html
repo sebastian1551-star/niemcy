@@ -3,148 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repozytorium Ustaw PL/DE</title>
+    <title>Baza Ustaw PL/DE - Nawigator</title>
     <style>
-        :root { --pl: #eb4d4b; --de: #2d3436; --bg: #f1f2f6; --accent: #27ae60; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        .wrapper { width: 100%; max-width: 720px; }
+        :root { --pl: #eb4d4b; --de: #2d3436; --bg: #f4f7f6; --accent: #27ae60; --blue: #0984e3; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .wrapper { width: 100%; max-width: 850px; }
+
+        /* Nagłówek i Akcje */
+        .header-panel { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; width: 100%; box-sizing: border-box; }
+        .top-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        .search-bar { flex-grow: 1; padding: 12px; border: 2px solid #eee; border-radius: 8px; font-size: 14px; transition: 0.3s; }
+        .search-bar:focus { border-color: var(--blue); outline: none; }
+        .refresh-btn { background: var(--accent); color: white; border: none; padding: 0 20px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; }
+
+        .proc-info { background: var(--de); color: white; padding: 10px; border-radius: 8px; font-size: 11px; display: flex; justify-content: space-between; }
+
+        /* Kafelki */
+        .pair-row { display: grid; grid-template-columns: 1fr 50px 1fr; gap: 15px; margin-bottom: 20px; align-items: stretch; }
+        .m-card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); display: flex; flex-direction: column; border-top: 4px solid #ddd; }
+        .m-card.pl { border-top-color: var(--pl); }
+        .m-card.de { border-top-color: var(--de); }
+
+        .org-label { font-size: 10px; font-weight: 800; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        h3 { margin: 0 0 10px 0; font-size: 15px; color: #2d3436; }
         
-        .sticky-nav { position: sticky; top: 0; background: var(--bg); padding: 5px 0 10px 0; z-index: 10; width: 100%; }
-        .top-row { display: flex; gap: 8px; margin-bottom: 8px; }
-        .search-bar { flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 13px; }
-        .refresh-btn { background: var(--accent); color: white; border: none; padding: 0 12px; border-radius: 5px; font-size: 11px; cursor: pointer; font-weight: bold; white-space: nowrap; }
+        /* Ścieżka dojścia (Breadcrumbs) */
+        .path-box { background: #f8f9fa; border: 1px dashed #cbd5e0; padding: 8px; border-radius: 6px; margin-bottom: 12px; }
+        .path-title { font-size: 9px; color: #718096; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
+        .breadcrumb { font-size: 10px; color: var(--blue); font-weight: 600; display: flex; align-items: center; flex-wrap: wrap; }
+        .breadcrumb span { color: #4a5568; margin: 0 4px; }
 
-        .proc-bar { background: #2d3436; color: #fff; font-size: 9px; padding: 6px; border-radius: 4px; line-height: 1.4; }
-        
-        .pair-row { 
-            display: grid; grid-template-columns: 1fr 35px 1fr; align-items: stretch; 
-            background: white; border-radius: 8px; margin-bottom: 8px; padding: 6px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-        }
-        .m-card { padding: 6px; display: flex; flex-direction: column; }
-        .m-card.pl { border-left: 3px solid var(--pl); }
-        .m-card.de { border-left: 3px solid var(--de); }
+        .desc { font-size: 12px; color: #4a5568; line-height: 1.5; flex-grow: 1; margin-bottom: 15px; }
+        .desc b { color: var(--pl); }
 
-        .auth { font-size: 8px; color: #999; text-transform: uppercase; font-weight: bold; margin-bottom: 2px; }
-        .path { font-size: 8px; color: #0984e3; margin-bottom: 4px; font-style: italic; }
-        h3 { font-size: 11px; margin: 0 0 4px 0; color: #222; min-height: 26px; }
-        
-        .focus-text { font-size: 10px; color: #444; line-height: 1.3; flex-grow: 1; }
-        .focus-text b { color: #d63031; background: #fff5f5; padding: 0 2px; }
+        .btn-action { display: block; text-align: center; background: var(--blue); color: white; text-decoration: none; padding: 10px; border-radius: 6px; font-size: 12px; font-weight: bold; transition: 0.2s; }
+        .btn-action:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        .btn-link { 
-            font-size: 10px; color: #fff; background: #0984e3; text-decoration: none; 
-            font-weight: bold; margin-top: 8px; padding: 4px 8px; border-radius: 4px; 
-            text-align: center; transition: 0.2s;
-        }
-        .btn-link:hover { background: #0773c5; }
-        .arrow { display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 14px; }
+        .icon-swap { display: flex; align-items: center; justify-content: center; font-size: 24px; color: #cbd5e0; }
 
-        @media (max-width: 550px) {
+        @media (max-width: 700px) {
             .pair-row { grid-template-columns: 1fr; }
-            .arrow { height: 15px; transform: rotate(90deg); margin: 2px 0; }
+            .icon-swap { transform: rotate(90deg); height: 30px; }
         }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
-    <div class="sticky-nav">
+    <div class="header-panel">
         <div class="top-row">
-            <input type="text" id="q" class="search-bar" placeholder="🔍 Szukaj ustawy..." onkeyup="filter()">
-            <button class="refresh-btn" onclick="refreshData()" id="refBtn">🔄 Odśwież</button>
+            <input type="text" id="q" class="search-bar" placeholder="🔍 Szukaj ustaw (np. woda, odpady)..." onkeyup="filter()">
+            <button class="refresh-btn" onclick="refresh()">🔄 ODŚWIEŻ</button>
         </div>
-        <div class="proc-bar" id="status-bar">
-            🇵🇱 <b>PL:</b> Sejm ⮕ Senat ⮕ Prezydent ⮕ Dz.U.<br>
-            🇩🇪 <b>DE:</b> Bundestag ⮕ Bundesrat ⮕ Präsident ⮕ BGBl.
+        <div class="proc-info">
+            <span>🇵🇱 ORGAN: Sejm RP ⮕ Senat ⮕ Prezydent</span>
+            <span>🇩🇪 ORGAN: Bundestag ⮕ Bundesrat ⮕ Präsident</span>
         </div>
     </div>
 
     <div id="list">
         <div class="pair-row">
             <div class="m-card pl">
-                <span class="auth">ORGAN: SEJM RP</span>
-                <h3>System handlu uprawnieniami (ETS)</h3>
-                <div class="focus-text">Polska opiera się głównie na <b>celach unijnych</b>.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000995/U/D20150995Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
-            </div>
-            <div class="arrow">↔️</div>
-            <div class="m-card de">
-                <span class="auth">ORGAN: BUNDESTAG</span>
-                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ KSG</span>
-                <h3>KSG (Klimaschutzgesetz)</h3>
-                <div class="focus-text">Sztywne cele: <b>neutralność do 2045 r.</b></div>
-                <a href="https://www.gesetze-im-internet.de/ksg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
-            </div>
-        </div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="auth">ORGAN: SEJM RP</span>
+                <span class="org-label">Polska • Ustawa 2017</span>
                 <h3>Prawo wodne</h3>
-                <div class="focus-text">Zarządzanie zasobami i <b>usługi wodne</b>.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001566/U/D20171566Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
+                <div class="desc">Zasady korzystania z wód, <b>zgody wodnoprawne</b> oraz system opłat i usług wodnych.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001566/U/D20171566Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF (ISAP)</a>
             </div>
-            <div class="arrow">↔️</div>
+            <div class="icon-swap">⇄</div>
             <div class="m-card de">
-                <span class="auth">ORGAN: BUNDESTAG</span>
-                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ WHG</span>
-                <h3>WHG (Wasserhaushaltsgesetz)</h3>
-                <div class="focus-text">Ochrona wód przed <b>chemią rolną</b>.</div>
-                <a href="https://www.gesetze-im-internet.de/whg_2009/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
+                <span class="org-label">Niemcy • Ustawa WHG</span>
+                <h3>Wasserhaushaltsgesetz</h3>
+                <div class="path-box">
+                    <div class="path-title">Dokładna ścieżka dojścia:</div>
+                    <div class="breadcrumb">BfJ<span>⮕</span>Gesetze-im-Internet<span>⮕</span>Litera W<span>⮕</span><b>WHG</b></div>
+                </div>
+                <div class="desc">Federalna ochrona zasobów wodnych. Priorytet: <b>czystość wód gruntowych</b>.</div>
+                <a href="https://www.gesetze-im-internet.de/whg_2009/index.html" target="_blank" class="btn-action">🌐 OTWÓRZ INDEKS (DE)</a>
             </div>
         </div>
 
         <div class="pair-row">
             <div class="m-card pl">
-                <span class="auth">ORGAN: SEJM RP</span>
-                <h3>Prawo ochrony środowiska (POŚ)</h3>
-                <div class="focus-text">Standardy emisyjne i <b>pozwolenia zintegrowane</b>.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
+                <span class="org-label">Polska • Ustawa 2001</span>
+                <h3>Prawo ochrony środowiska</h3>
+                <div class="desc">Fundament systemu: <b>pozwolenia zintegrowane</b>, emisje i kary za zanieczyszczenia.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF (ISAP)</a>
             </div>
-            <div class="arrow">↔️</div>
+            <div class="icon-swap">⇄</div>
             <div class="m-card de">
-                <span class="auth">ORGAN: BUNDESTAG</span>
-                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ BImSchG</span>
-                <h3>BImSchG (Kontrola imisji)</h3>
-                <div class="focus-text">Niezwykle restrykcyjne normy dla <b>instalacji</b>.</div>
-                <a href="https://www.gesetze-im-internet.de/bimschg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
+                <span class="org-label">Niemcy • Ustawa BImSchG</span>
+                <h3>BImSchG (Imisje)</h3>
+                <div class="path-box">
+                    <div class="path-title">Dokładna ścieżka dojścia:</div>
+                    <div class="breadcrumb">BfJ<span>⮕</span>Gesetze-im-Internet<span>⮕</span>Litera B<span>⮕</span><b>BImSchG</b></div>
+                </div>
+                <div class="desc">Kontrola emisji gazów i pyłów. Kluczowe dla <b>instalacji przemysłowych</b>.</div>
+                <a href="https://www.gesetze-im-internet.de/bimschg/index.html" target="_blank" class="btn-action">🌐 OTWÓRZ INDEKS (DE)</a>
             </div>
         </div>
 
         <div class="pair-row">
             <div class="m-card pl">
-                <span class="auth">ORGAN: SEJM RP</span>
-                <h3>Ustawa o odpadach (2012)</h3>
-                <div class="focus-text">Obowiązkowa <b>ewidencja BDO</b>.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
+                <span class="org-label">Polska • Ustawa 2012</span>
+                <h3>Ustawa o odpadach</h3>
+                <div class="desc">System <b>ewidencji BDO</b>. Hierarchia sposobów postępowania z odpadami.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF (ISAP)</a>
             </div>
-            <div class="arrow">↔️</div>
+            <div class="icon-swap">⇄</div>
             <div class="m-card de">
-                <span class="auth">ORGAN: BUNDESTAG</span>
-                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ KrWG</span>
+                <span class="org-label">Niemcy • Ustawa KrWG</span>
                 <h3>KrWG (Obieg zamknięty)</h3>
-                <div class="focus-text">Nacisk na <b>odpowiedzialność produktu</b>.</div>
-                <a href="https://www.gesetze-im-internet.de/krwg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
+                <div class="path-box">
+                    <div class="path-title">Dokładna ścieżka dojścia:</div>
+                    <div class="breadcrumb">BfJ<span>⮕</span>Gesetze-im-Internet<span>⮕</span>Litera K<span>⮕</span><b>KrWG</b></div>
+                </div>
+                <div class="desc">Niemiecka "gospodarka cyrkularna". <b>Produktverantwortung</b> (odpowiedzialność).</div>
+                <a href="https://www.gesetze-im-internet.de/krwg/index.html" target="_blank" class="btn-action">🌐 OTWÓRZ INDEKS (DE)</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function refreshData() {
-        const btn = document.getElementById('refBtn');
-        const status = document.getElementById('status-bar');
-        btn.innerText = "⌛ Odświeżanie...";
-        btn.style.background = "#f39c12";
-
+    function refresh() {
+        const btn = document.querySelector('.refresh-btn');
+        btn.innerHTML = "⌛ SPRAWDZANIE...";
         setTimeout(() => {
-            const now = new Date().toLocaleDateString();
-            btn.innerText = "✅ Stan na " + now;
-            btn.style.background = "#27ae60";
-            status.style.borderLeft = "4px solid #27ae60";
-            setTimeout(() => { btn.innerText = "🔄 Odśwież"; }, 3000);
-        }, 800);
+            const date = new Date().toLocaleDateString();
+            btn.innerHTML = "✅ AKTUALNE: " + date;
+            btn.style.background = "#2ecc71";
+        }, 600);
     }
 
     function filter() {
