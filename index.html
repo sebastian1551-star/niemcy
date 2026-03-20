@@ -7,7 +7,7 @@
     <style>
         :root { --pl: #eb4d4b; --de: #2d3436; --bg: #f1f2f6; --accent: #27ae60; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        .wrapper { width: 100%; max-width: 720px; } /* Zagnieżdżenie kafelków blisko siebie */
+        .wrapper { width: 100%; max-width: 720px; }
         
         .sticky-nav { position: sticky; top: 0; background: var(--bg); padding: 5px 0 10px 0; z-index: 10; width: 100%; }
         .top-row { display: flex; gap: 8px; margin-bottom: 8px; }
@@ -64,8 +64,59 @@
         <div class="pair-row">
             <div class="m-card pl">
                 <span class="auth">ORGAN: SEJM RP</span>
+                <h3>System handlu uprawnieniami (ETS)</h3>
+                <div class="focus-text">Polska opiera się głównie na <b>celach unijnych</b>.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000995/U/D20150995Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
+            </div>
+            <div class="arrow">↔️</div>
+            <div class="m-card de">
+                <span class="auth">ORGAN: BUNDESTAG</span>
+                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ KSG</span>
+                <h3>KSG (Klimaschutzgesetz)</h3>
+                <div class="focus-text">Sztywne cele: <b>neutralność do 2045 r.</b></div>
+                <a href="https://www.gesetze-im-internet.de/ksg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
+            </div>
+        </div>
+
+        <div class="pair-row">
+            <div class="m-card pl">
+                <span class="auth">ORGAN: SEJM RP</span>
+                <h3>Prawo wodne</h3>
+                <div class="focus-text">Zarządzanie zasobami i <b>usługi wodne</b>.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001566/U/D20171566Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
+            </div>
+            <div class="arrow">↔️</div>
+            <div class="m-card de">
+                <span class="auth">ORGAN: BUNDESTAG</span>
+                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ WHG</span>
+                <h3>WHG (Wasserhaushaltsgesetz)</h3>
+                <div class="focus-text">Ochrona wód przed <b>chemią rolną</b>.</div>
+                <a href="https://www.gesetze-im-internet.de/whg_2009/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
+            </div>
+        </div>
+
+        <div class="pair-row">
+            <div class="m-card pl">
+                <span class="auth">ORGAN: SEJM RP</span>
+                <h3>Prawo ochrony środowiska (POŚ)</h3>
+                <div class="focus-text">Standardy emisyjne i <b>pozwolenia zintegrowane</b>.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20010620627/U/D20010627Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
+            </div>
+            <div class="arrow">↔️</div>
+            <div class="m-card de">
+                <span class="auth">ORGAN: BUNDESTAG</span>
+                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ BImSchG</span>
+                <h3>BImSchG (Kontrola imisji)</h3>
+                <div class="focus-text">Niezwykle restrykcyjne normy dla <b>instalacji</b>.</div>
+                <a href="https://www.gesetze-im-internet.de/bimschg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
+            </div>
+        </div>
+
+        <div class="pair-row">
+            <div class="m-card pl">
+                <span class="auth">ORGAN: SEJM RP</span>
                 <h3>Ustawa o odpadach (2012)</h3>
-                <div class="focus-text">Centralny system <b>BDO</b></div>
+                <div class="focus-text">Obowiązkowa <b>ewidencja BDO</b>.</div>
                 <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
             </div>
             <div class="arrow">↔️</div>
@@ -73,25 +124,8 @@
                 <span class="auth">ORGAN: BUNDESTAG</span>
                 <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ KrWG</span>
                 <h3>KrWG (Obieg zamknięty)</h3>
-                <div class="focus-text">Odpowiedzialność <b>producenta</b></div>
+                <div class="focus-text">Nacisk na <b>odpowiedzialność produktu</b>.</div>
                 <a href="https://www.gesetze-im-internet.de/krwg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
-            </div>
-        </div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="auth">ORGAN: SEJM RP</span>
-                <h3>Gospodarka opakowaniami</h3>
-                <div class="focus-text">Opłaty <b>produktowe</b></div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf" target="_blank" class="btn-link">📄 Pobierz PDF</a>
-            </div>
-            <div class="arrow">↔️</div>
-            <div class="m-card de">
-                <span class="auth">ORGAN: BUNDESTAG</span>
-                <span class="path">Ścieżka: BfJ ⮕ Gesetze ⮕ VerpackG</span>
-                <h3>VerpackG (Opakowania)</h3>
-                <div class="focus-text">Rejestr <b>LUCID</b> i kaucje</div>
-                <a href="https://www.gesetze-im-internet.de/verpackg/index.html" target="_blank" class="btn-link">🌐 Otwórz (DE)</a>
             </div>
         </div>
     </div>
@@ -101,17 +135,15 @@
     function refreshData() {
         const btn = document.getElementById('refBtn');
         const status = document.getElementById('status-bar');
-        const now = new Date().toLocaleTimeString();
-        
-        btn.innerText = "⌛ Czekaj...";
+        btn.innerText = "⌛ Odświeżanie...";
         btn.style.background = "#f39c12";
 
         setTimeout(() => {
-            btn.innerText = "✅ Aktualne";
+            const now = new Date().toLocaleDateString();
+            btn.innerText = "✅ Stan na " + now;
             btn.style.background = "#27ae60";
             status.style.borderLeft = "4px solid #27ae60";
-            console.log("Dane odświeżone o: " + now);
-            setTimeout(() => { btn.innerText = "🔄 Odśwież"; }, 2000);
+            setTimeout(() => { btn.innerText = "🔄 Odśwież"; }, 3000);
         }, 800);
     }
 
