@@ -10,7 +10,6 @@
             --text: #2d3436; --accent: #27ae60; --blue: #0984e3; --border: #cbd5e0;
         }
 
-        /* Tryb Ciemny - kolory */
         body.dark-mode {
             --bg: #1a1a1a; --card: #2d2d2d; --text: #f5f6fa;
             --border: #444; --blue: #3498db;
@@ -27,14 +26,12 @@
         .btn { border: none; padding: 10px 15px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .refresh-btn { background: var(--accent); color: white; }
         .theme-btn { background: var(--blue); color: white; }
-        .btn:hover { opacity: 0.8; }
 
         .diaries-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .diary-link { text-decoration: none; padding: 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-align: center; color: white; transition: 0.3s; }
+        .diary-link { text-decoration: none; padding: 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-align: center; color: white; }
         .diary-pl { background: var(--pl); }
         .diary-de { background: var(--de); }
 
-        /* Karty ustaw */
         .pair-row { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 15px; margin-bottom: 20px; align-items: stretch; }
         .m-card { background: var(--card); padding: 15px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); display: flex; flex-direction: column; border-top: 4px solid #ddd; }
         .m-card.pl { border-top-color: var(--pl); }
@@ -43,9 +40,6 @@
         .org-label { font-size: 10px; font-weight: 800; color: #888; text-transform: uppercase; margin-bottom: 5px; }
         h3 { margin: 0 0 10px 0; font-size: 14px; min-height: 34px; }
         
-        .path-box { background: rgba(0,0,0,0.03); border: 1px dashed var(--border); padding: 8px; border-radius: 6px; margin-bottom: 12px; }
-        .breadcrumb { font-size: 9px; color: var(--blue); font-weight: 600; }
-
         .desc { font-size: 11px; opacity: 0.8; line-height: 1.5; flex-grow: 1; margin-bottom: 15px; }
         .btn-action { display: block; text-align: center; background: var(--blue); color: white; text-decoration: none; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
         .icon-swap { display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--border); }
@@ -53,7 +47,6 @@
         @media (max-width: 700px) {
             .pair-row { grid-template-columns: 1fr; }
             .icon-swap { transform: rotate(90deg); height: 20px; }
-            .diaries-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -62,136 +55,84 @@
 <div class="wrapper">
     <div class="header-panel">
         <div class="top-row">
-            <input type="text" id="q" class="search-bar" placeholder="🔍 Szukaj ustawy..." onkeyup="filter()">
+            <input type="text" id="q" class="search-bar" placeholder="🔍 Szukaj ustawy (np. odpady, wodne)..." onkeyup="filter()">
             <div class="controls">
                 <button class="btn theme-btn" onclick="toggleTheme()">🌓 TRYB</button>
                 <button class="btn refresh-btn" id="rBtn" onclick="refresh()">🔄 ODŚWIEŻ</button>
             </div>
         </div>
         <div class="diaries-row">
-            <a href="https://dziennikustaw.gov.pl/DU" target="_blank" class="diary-link diary-pl">🇵🇱 DZIENNIK USTAW RP</a>
-            <a href="https://www.recht.bund.de/" target="_blank" class="diary-link diary-de">🇩🇪 BUNDESGESETZBLATT</a>
+            <a href="https://dziennikustaw.gov.pl/" target="_blank" class="diary-link diary-pl">🇵🇱 DZIENNIK USTAW</a>
+            <a href="https://www.gesetze-im-internet.de/" target="_blank" class="diary-link diary-de">🇩🇪 GESETZE IM INTERNET</a>
         </div>
     </div>
 
     <div id="list">
         <div class="pair-row">
             <div class="m-card pl">
-                <span class="org-label">Polska • Min. Klimatu</span>
+                <span class="org-label">Polska</span>
                 <h3>Katalog Odpadów (2020)</h3>
-                <div class="desc">Rozporządzenie określające listę kodów odpadów (6 cyfr) i ich klasyfikację.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20200000010/O/D20200010.pdf" target="_blank" class="btn-action">📄 PDF (PL)</a>
+                <div class="desc">Rozporządzenie w sprawie katalogu odpadów. Pełna lista kodów.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20200000010/O/D20200010.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF (PL)</a>
             </div>
             <div class="icon-swap">⇆</div>
             <div class="m-card de">
-                <span class="org-label">Niemcy • BMUV</span>
-                <h3>AVV (Katalog Odpadów)</h3>
-                <div class="path-box">
-                    <div class="breadcrumb">BfJ<span>⮕</span>AVV<span>⮕</span><b>Abfallverzeichnis</b></div>
-                </div>
-                <div class="desc">Niemieckie rozporządzenie w sprawie wykazu odpadów (Abfallverzeichnis-Verordnung).</div>
-                <a href="https://www.gesetze-im-internet.de/avv/avv.pdf" target="_blank" class="btn-action">📄 PDF (DE)</a>
+                <span class="org-label">Niemcy</span>
+                <h3>AVV (Abfallverzeichnis)</h3>
+                <div class="desc">Abfallverzeichnis-Verordnung. Niemiecki wykaz kodów odpadów.</div>
+                <a href="https://www.gesetze-im-internet.de/avv/BJNR253000001.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
             </div>
         </div>
 
         <div class="pair-row">
             <div class="m-card pl">
-                <span class="org-label">Polska • Sejm RP</span>
-                <h3>Gosp. opakowaniami i odp. opak.</h3>
-                <div class="desc">Zasady wytwarzania opakowań, opłaty i poziomy recyklingu.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf" target="_blank" class="btn-action">📄 PDF (PL)</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">Niemcy • Bundestag</span>
-                <h3>VerpackG (Opakowania)</h3>
-                <div class="path-box">
-                    <div class="breadcrumb">BfJ<span>⮕</span>VerpackG<span>⮕</span><b>LUCID</b></div>
-                </div>
-                <div class="desc">Rejestracja w LUCID, systemy dualne i kaucje (Pfand).</div>
-                <a href="https://www.gesetze-im-internet.de/verpackg/verpackg.pdf" target="_blank" class="btn-action">📄 PDF (DE)</a>
-            </div>
-        </div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">Polska • Sejm RP</span>
-                <h3>Prawo wodne (2017)</h3>
-                <div class="desc">Zarządzanie wodami, zgody wodnoprawne i Wody Polskie.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001566/U/D20171566Lj.pdf" target="_blank" class="btn-action">📄 PDF (PL)</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">Niemcy • Bundestag</span>
-                <h3>WHG (Gospodarka wodna)</h3>
-                <div class="path-box">
-                    <div class="breadcrumb">BfJ<span>⮕</span>WHG<span>⮕</span><b>Wasserhaushalt</b></div>
-                </div>
-                <div class="desc">Ochrona wód powierzchniowych i gruntowych.</div>
-                <a href="https://www.gesetze-im-internet.de/whg_2009/whg_2009.pdf" target="_blank" class="btn-action">📄 PDF (DE)</a>
-            </div>
-        </div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">Polska • Sejm RP</span>
-                <h3>Ustawa o OZE</h3>
-                <div class="desc">Systemy aukcyjne, prosumenci i zielona energia.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20150000478/U/D20150478Lj.pdf" target="_blank" class="btn-action">📄 PDF (PL)</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">Niemcy • Bundestag</span>
-                <h3>EEG (OZE)</h3>
-                <div class="path-box">
-                    <div class="breadcrumb">BfJ<span>⮕</span>EEG<span>⮕</span><b>Energiewende</b></div>
-                </div>
-                <div class="desc">Taryfy gwarantowane, aukcje i wsparcie zielonej energii.</div>
-                <a href="https://www.gesetze-im-internet.de/eeg_2014/eeg_2014.pdf" target="_blank" class="btn-action">📄 PDF (DE)</a>
-            </div>
-        </div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">Polska • Sejm RP</span>
+                <span class="org-label">Polska</span>
                 <h3>Ustawa o odpadach</h3>
-                <div class="desc">Ogólne zasady zarządzania odpadami i system BDO.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-action">📄 PDF (PL)</a>
+                <div class="desc">Podstawowa ustawa regulująca gospodarkę odpadami i BDO.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF (PL)</a>
             </div>
             <div class="icon-swap">⇆</div>
             <div class="m-card de">
-                <span class="org-label">Niemcy • Bundestag</span>
-                <h3>KrWG (Obieg zamknięty)</h3>
-                <div class="path-box">
-                    <div class="breadcrumb">BfJ<span>⮕</span>KrWG<span>⮕</span><b>Kreislaufwirtschaft</b></div>
-                </div>
-                <div class="desc">Podstawowa ustawa o gospodarce o obiegu zamkniętym.</div>
-                <a href="https://www.gesetze-im-internet.de/krwg/krwg.pdf" target="_blank" class="btn-action">📄 PDF (DE)</a>
+                <span class="org-label">Niemcy</span>
+                <h3>KrWG (Kreislaufwirtschaft)</h3>
+                <div class="desc">Ustawa o gospodarce o obiegu zamkniętym (odpowiednik Ustawy o odpadach).</div>
+                <a href="https://www.gesetze-im-internet.de/krwg/BJNR021210012.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
+            </div>
+        </div>
+
+        <div class="pair-row">
+            <div class="m-card pl">
+                <span class="org-label">Polska</span>
+                <h3>Prawo wodne</h3>
+                <div class="desc">Zarządzanie wodami, zgody wodnoprawne i system Wody Polskie.</div>
+                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001566/U/D20171566Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF (PL)</a>
+            </div>
+            <div class="icon-swap">⇆</div>
+            <div class="m-card de">
+                <span class="org-label">Niemcy</span>
+                <h3>WHG (Wasserhaushalt)</h3>
+                <div class="desc">Wasserhaushaltsgesetz - niemieckie Prawo Wodne.</div>
+                <a href="https://www.gesetze-im-internet.de/whg_2009/BJNR258510009.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Zarządzanie motywem
     function toggleTheme() {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
 
-    // Ładowanie motywu
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-    }
+    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
 
     function refresh() {
         const btn = document.getElementById('rBtn');
-        btn.innerHTML = "⌛ CZEKAJ...";
+        btn.innerHTML = "⌛...";
         setTimeout(() => {
-            const date = new Date().toLocaleTimeString();
-            btn.innerHTML = "✅ " + date;
+            btn.innerHTML = "✅ " + new Date().toLocaleTimeString();
             btn.style.background = "#2ecc71";
-        }, 600);
+        }, 400);
     }
 
     function filter() {
@@ -202,6 +143,5 @@
         }
     }
 </script>
-
 </body>
 </html>
