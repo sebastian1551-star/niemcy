@@ -3,245 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nawigator Ustaw PL/DE - Final</title>
+    <title>Porównanie Prawa: Polska vs Niemcy</title>
     <style>
-        :root { 
-            --pl: #eb4d4b; --de: #2d3436; --bg: #f4f7f6; --card: #ffffff;
-            --text: #2d3436; --accent: #27ae60; --blue: #0984e3; --border: #cbd5e0;
-            --section-bg: #dfe6e9;
+        :root {
+            --pl-color: #dc3545;
+            --de-color: #ffc107;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --accent: #0984e3;
         }
 
-        body.dark-mode {
-            --bg: #1a1a1a; --card: #2d2d2d; --text: #f5f6fa;
-            --border: #444; --blue: #3498db; --section-bg: #3d3d3d;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 15px;
+            line-height: 1.5;
         }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; color: var(--text); transition: 0.3s; }
-        .wrapper { width: 100%; max-width: 900px; }
-
-        /* Panel Sterowania */
-        .header-panel { background: var(--card); padding: 20px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-bottom: 25px; width: 100%; box-sizing: border-box; position: sticky; top: 10px; z-index: 100; }
-        .top-row { display: flex; gap: 10px; margin-bottom: 15px; }
-        .search-bar { flex-grow: 1; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-size: 15px; background: var(--card); color: var(--text); outline: none; }
-        .search-bar:focus { border-color: var(--blue); }
-        
-        .btn { border: none; padding: 10px 15px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: bold; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
-        .refresh-btn { background: var(--accent); color: white; }
-        .theme-btn { background: var(--blue); color: white; }
-
-        /* Nagłówki Sekcji */
-        .category-header { 
-            background: var(--section-bg); 
-            padding: 10px 20px; 
-            border-radius: 8px; 
-            margin: 30px 0 15px 0; 
-            font-size: 18px; 
-            font-weight: bold; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-            border-left: 5px solid var(--blue);
+        h1 {
+            text-align: center;
+            font-size: 1.4rem;
+            color: #2d3436;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
         }
 
-        /* Karty */
-        .pair-row { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 15px; margin-bottom: 20px; align-items: stretch; }
-        .m-card { background: var(--card); padding: 18px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; border-top: 4px solid #ddd; position: relative; }
-        .m-card.pl { border-top-color: var(--pl); }
-        .m-card.de { border-top-color: var(--de); }
-
-        .org-label { font-size: 10px; font-weight: 800; color: #888; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        h3 { margin: 0 0 10px 0; font-size: 15px; line-height: 1.3; }
-        .desc { font-size: 12px; opacity: 0.8; line-height: 1.5; flex-grow: 1; margin-bottom: 15px; }
-        
-        .btn-action { display: block; text-align: center; background: var(--blue); color: white; text-decoration: none; padding: 10px; border-radius: 6px; font-size: 12px; font-weight: bold; transition: 0.3s; }
-        .btn-action:hover { filter: brightness(1.1); transform: translateY(-2px); }
-        .icon-swap { display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--border); font-weight: bold; }
-
-        @media (max-width: 750px) {
-            .pair-row { grid-template-columns: 1fr; }
-            .icon-swap { transform: rotate(90deg); height: 30px; }
-            .header-panel { position: relative; }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
         }
+
+        /* Styl kafelków */
+        details {
+            background: var(--card-bg);
+            margin-bottom: 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #dfe6e9;
+        }
+
+        summary {
+            padding: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            transition: background 0.3s;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: "➔";
+            transition: transform 0.3s;
+            color: var(--accent);
+        }
+
+        details[open] summary::after {
+            transform: rotate(90-deg);
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #eee;
+            background: #f8f9fa;
+        }
+
+        .content {
+            padding: 15px;
+            font-size: 0.95rem;
+        }
+
+        /* Tabela wewnątrz kafelka */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .comparison-table th {
+            background: #eee;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .comparison-table td {
+            border-bottom: 1px solid #eee;
+            padding: 10px 8px;
+            vertical-align: top;
+        }
+
+        .pl-label { color: var(--pl-color); font-weight: bold; }
+        .de-label { color: #d39e00; font-weight: bold; }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .badge-pl { background: #ffeef0; color: var(--pl-color); }
+        .badge-de { background: #fff9db; color: #856404; }
+
+        .highlight {
+            background: #e1f5fe;
+            padding: 10px;
+            border-left: 4px solid var(--accent);
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        strong { color: #000; }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <div class="header-panel">
-        <div class="top-row">
-            <input type="text" id="q" class="search-bar" placeholder="🔍 Szukaj ustawy lub słowa kluczowego..." onkeyup="filter()">
-            <div class="btn theme-btn" onclick="toggleTheme()">🌓</div>
-            <button class="btn refresh-btn" id="rBtn" onclick="refresh()">🔄</button>
+<div class="container">
+    <h1>Gospodarka Odpadami i Prawo<br>🇵🇱 Polska vs Niemcy 🇩🇪</h1>
+
+    <details>
+        <summary>⚖️ System Prawny i Ustawy</summary>
+        <div class="content">
+            <div class="badge badge-pl">POLSKA</div>
+            <p>System <strong>scentralizowany</strong>. Ustawa o odpadach (2012) obowiązuje wszędzie tak samo. Rejestracja w cyfrowym systemie <strong>BDO</strong>.</p>
+            
+            <div class="badge badge-de">NIEMCY</div>
+            <p>System <strong>federalny</strong>. Podstawa to <strong>KrWG</strong>, ale każdy z 16 landów ma swoje ustawy (np. SächsABG w Saksonii). <strong>Zawsze sprawdzaj prawo danego landu!</strong></p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Obszar</th>
+                    <th>Polska</th>
+                    <th>Niemcy</th>
+                </tr>
+                <tr>
+                    <td>Odpady Ogólne</td>
+                    <td>Ustawa 2012</td>
+                    <td>KrWG</td>
+                </tr>
+                <tr>
+                    <td>Katalog (Kody)</td>
+                    <td>Katalog 2020</td>
+                    <td>AVV (to samo co EWC)</td>
+                </tr>
+                <tr>
+                    <td>Budowa/Przemysł</td>
+                    <td>POŚ 2001</td>
+                    <td>GewAbfV</td>
+                </tr>
+            </table>
         </div>
-        <div style="display: flex; gap: 10px; font-size: 11px; font-weight: bold;">
-            <a href="https://isap.sejm.gov.pl" target="_blank" style="color: var(--pl); text-decoration: none;">🇵🇱 SYSTEM ISAP</a>
-            <span style="color: var(--border);">|</span>
-            <a href="https://www.gesetze-im-internet.de" target="_blank" style="color: var(--de); text-decoration: none;">🇩🇪 GESETZE IM INTERNET</a>
+    </details>
+
+    <details>
+        <summary>🏗️ Odpady Budowlane (Grupa 17)</summary>
+        <div class="content">
+            <p>Oba kraje wymagają <strong>segregacji u źródła</strong> na frakcje: drewno, plastik, szkło, metal, gips, gruz/beton.</p>
+            
+            <div class="highlight">
+                <strong>Logistyka w Polsce:</strong>
+                <p>Karta KPO generowana w <strong>BDO</strong> przed transportem. Tablica <strong>"ODPADY"</strong> na aucie.</p>
+            </div>
+
+            <div class="highlight">
+                <strong>Logistyka w Niemczech:</strong>
+                <p>Odpady inne niż niebezpieczne: obieg papierowy. Dokument <strong>Lieferschein</strong> + kwit wagowy. Tablica <strong>"A"</strong> (Abfall) na aucie.</p>
+            </div>
+            <p><i>Uwaga: Jeśli w Niemczech nie segregujesz u źródła, musisz udowodnić urzędowi (GewAbfV), dlaczego było to technicznie niemożliwe.</i></p>
         </div>
-    </div>
+    </details>
 
-    <div id="list">
-        
-        <div class="category-header">♻️ GOSPODARKA ODPADAMI</div>
+    <details>
+        <summary>☣️ Odpady Niebezpieczne</summary>
+        <div class="content">
+            <div class="badge badge-pl">POLSKA - BDO</div>
+            <ul>
+                <li>Pełna ewidencja cyfrowa przed transportem.</li>
+                <li>Weryfikacja odbiorcy po numerze rejestrowym.</li>
+            </ul>
 
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">PL • Ustawa Główna</span>
-                <h3>Ustawa o odpadach (2013)</h3>
-                <div class="desc">Fundament gospodarki odpadami, hierarchia postepowania, zasady BDO.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000021/U/D20130021Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">DE • Kreislaufwirtschaftsgesetz</span>
-                <h3>KrWG (Obieg zamknięty)</h3>
-                <div class="desc">Podstawowa norma niemiecka dot. recyklingu i unikania odpadów.</div>
-                <a href="https://www.gesetze-im-internet.de/krwg/BJNR021210012.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
-            </div>
+            <div class="badge badge-de">NIEMCY - eANV</div>
+            <ul>
+                <li>System <strong>eANV</strong> (portal ZKS-Abfall).</li>
+                <li>Wymagane podpisy elektroniczne (karty chipowe i PIN).</li>
+                <li><strong>Certyfikat EfB:</strong> Szukaj firm z tytułem <i>Entsorgungsfachbetrieb</i>. To gwarancja, że urzędnik szybciej zaakceptuje ilości odpadów.</li>
+                <li>Dokument: <strong>Begleitschein</strong> (odpowiednik KPO).</li>
+            </ul>
         </div>
+    </details>
 
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">PL • Katalog</span>
-                <h3>Katalog Odpadów (2020)</h3>
-                <div class="desc">Pełny wykaz kodów odpadów i podział na odpady niebezpieczne.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20200000010/O/D20200010.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">DE • Abfallverzeichnis</span>
-                <h3>AVV (Wykaz Odpadów)</h3>
-                <div class="desc">Niemieckie rozporządzenie w sprawie katalogu (EWC Codes).</div>
-                <a href="https://www.gesetze-im-internet.de/avv/BJNR253000001.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
-            </div>
+    <details>
+        <summary>💧 Prawo Wodne i Odwadnianie</summary>
+        <div class="content">
+            <table class="comparison-table">
+                <tr>
+                    <th>Cecha</th>
+                    <th>Polska (Wody Polskie)</th>
+                    <th>Niemcy (UWB)</th>
+                </tr>
+                <tr>
+                    <td>Wykopy</td>
+                    <td>Zgłoszenie (do 30 dni)</td>
+                    <td><strong>Erlaubnis</strong> (niemal zawsze)</td>
+                </tr>
+                <tr>
+                    <td>Dokument</td>
+                    <td>Operat Wodnoprawny</td>
+                    <td>Dane techniczne wpływu na lustro wody</td>
+                </tr>
+                <tr>
+                    <td>Decyzja</td>
+                    <td>Dyrektor Zarządu Zlewni</td>
+                    <td>Untere Wasserbehörde (Lokalnie)</td>
+                </tr>
+            </table>
+            <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
+                *W Niemczech (np. Berlin) każda praca pomp igłofiltrowych obniżająca poziom wody poza działką wymaga pełnego pozwolenia wodnoprawnego, niezależnie od czasu trwania.
+            </p>
         </div>
+    </details>
 
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">PL • Magazynowanie</span>
-                <h3>Magazynowanie Odpadów (2020)</h3>
-                <div class="desc">Wymogi dot. monitoringu, ppoż, etykietowania i czasu składowania.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20200001742/O/D20201742.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">DE • Lagerung</span>
-                <h3>KrWG § 12 / DepV</h3>
-                <div class="desc">Przepisy o składowaniu i wymaganiach dla magazynów odpadów.</div>
-                <a href="https://www.gesetze-im-internet.de/depv_2009/BJNR090010009.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
-            </div>
+    <details>
+        <summary>🧹 Odpady Komunalne (Zaplecze)</summary>
+        <div class="content">
+            <p>Frakcje identyczne (Bio, Papier, Szkło, Plastik/Metal, Zmieszane).</p>
+            <p><strong>Różnica w umowach:</strong></p>
+            <ul>
+                <li><strong>Niemcy:</strong> Każda budowa musi mieć umowę z gminą na min. 1 pojemnik lub z certyfikowaną firmą.</li>
+                <li><strong>Polska:</strong> Umowa z firmą wpisaną do RDR (Rejestr Działalności Regulowanej) w danej gminie + wpis w BDO.</li>
+            </ul>
         </div>
+    </details>
 
-        <div class="category-header">💧 GOSPODARKA WODNA</div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">PL • Prawo Wodne</span>
-                <h3>Prawo Wodne (2017)</h3>
-                <div class="desc">Zarządzanie zasobami, zgody wodnoprawne, usługi wodne.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20170001566/U/D20171566Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">DE • Wasserhaushalt</span>
-                <h3>WHG (Ustawa Wodna)</h3>
-                <div class="desc">Wasserhaushaltsgesetz - ochrona i zarządzanie wodami w Niemczech.</div>
-                <a href="https://www.gesetze-im-internet.de/whg_2009/BJNR258510009.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
-            </div>
+    <details>
+        <summary>🏛️ Instytucje (Odpowiedniki)</summary>
+        <div class="content">
+            <table class="comparison-table">
+                <tr>
+                    <th>Polska</th>
+                    <th>Niemcy</th>
+                </tr>
+                <tr>
+                    <td><strong>Wody Polskie</strong></td>
+                    <td>WSV (Fed.) / WWA (Land.)</td>
+                </tr>
+                <tr>
+                    <td><strong>GIOŚ / WIOŚ</strong></td>
+                    <td>UBA / LfU (Landesamt)</td>
+                </tr>
+                <tr>
+                    <td><strong>RDOŚ</strong></td>
+                    <td>Untere Naturschutzbehörde</td>
+                </tr>
+                <tr>
+                    <td><strong>Nadleśnictwo</strong></td>
+                    <td>Forstamt</td>
+                </tr>
+                <tr>
+                    <td><strong>Starostwo</strong></td>
+                    <td>Landratsamt (LRA)</td>
+                </tr>
+            </table>
         </div>
+    </details>
 
-        <div class="category-header">🌿 PRZYRODA I PROCESY</div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">PL • Ochrona Przyrody</span>
-                <h3>Ochrona Przyrody (2004)</h3>
-                <div class="desc">Ochrona gatunkowa, wycinka drzew, formy ochrony krajobrazu.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20040920880/U/D20040880Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">DE • Naturschutz</span>
-                <h3>BNatSchG (Ochrona Przyrody)</h3>
-                <div class="desc">Bundesnaturschutzgesetz - niemiecka ustawa o ochronie przyrody.</div>
-                <a href="https://www.gesetze-im-internet.de/bnatschg_2009/BJNR254210009.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
-            </div>
-        </div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">PL • OOŚ</span>
-                <h3>Ustawa Ocenowa (2008)</h3>
-                <div class="desc">Udział społeczeństwa, decyzje środowiskowe i raporty OOŚ.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20081991227/U/D20081227Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">DE • UVPG</span>
-                <h3>UVPG (Ocena wpływu)</h3>
-                <div class="desc">Gesetz über die Umweltverträglichkeitsprüfung.</div>
-                <a href="https://www.gesetze-im-internet.de/uvpg/BJNR002050990.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
-            </div>
-        </div>
-
-        <div class="category-header">📦 OPAKOWANIA I ENERGIA</div>
-
-        <div class="pair-row">
-            <div class="m-card pl">
-                <span class="org-label">PL • Opakowania</span>
-                <h3>Gosp. Opakowaniami (2013)</h3>
-                <div class="desc">Zasady recyklingu opakowań i opłaty produktowe.</div>
-                <a href="https://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20130000888/U/D20130888Lj.pdf" target="_blank" class="btn-action">📄 OTWÓRZ PDF</a>
-            </div>
-            <div class="icon-swap">⇆</div>
-            <div class="m-card de">
-                <span class="org-label">DE • VerpackG</span>
-                <h3>VerpackG (Opakowania)</h3>
-                <div class="desc">Rejestracja w systemie LUCID i obowiązki kaucyjne.</div>
-                <a href="https://www.gesetze-im-internet.de/verpackg/BJNR226210017.html" target="_blank" class="btn-action">🌐 OTWÓRZ (DE)</a>
-            </div>
-        </div>
-
-    </div>
 </div>
 
-<script>
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    }
+<p style="text-align: center; color: #95a5a6; font-size: 0.8rem;">
+    Opracowano na podstawie przepisów KrWG, GewAbfV oraz Ustawy o odpadach.<br>
+    Pamiętaj o sprawdzeniu prawa landowego (Landesrecht)!
+</p>
 
-    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
-
-    function refresh() {
-        const btn = document.getElementById('rBtn');
-        btn.innerHTML = "⌛";
-        setTimeout(() => {
-            btn.innerHTML = "✅";
-            setTimeout(() => btn.innerHTML = "🔄", 1500);
-        }, 400);
-    }
-
-    function filter() {
-        let val = document.getElementById('q').value.toLowerCase();
-        let rows = document.getElementsByClassName('pair-row');
-        let headers = document.getElementsByClassName('category-header');
-        
-        for (let r of rows) { 
-            r.style.display = r.innerText.toLowerCase().includes(val) ? "grid" : "none"; 
-        }
-        
-        // Ukryj nagłówki, jeśli pod nimi nie ma żadnej widocznej karty
-        for (let h of headers) {
-            let next = h.nextElementSibling;
-            let hasVisible = false;
-            while(next && next.classList.contains('pair-row')) {
-                if(next.style.display !== 'none') hasVisible = true;
-                next = next.nextElementSibling;
-            }
-            h.style.display = hasVisible ? 'flex' : 'none';
-        }
-    }
-</script>
 </body>
 </html>
