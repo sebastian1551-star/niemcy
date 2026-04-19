@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Porównanie Prawa: Polska vs Niemcy</title>
+    <title>Porównanie Prawa i Hierarchia: PL vs DE (Elektroenergetyka)</title>
     <style>
         :root {
             --pl-color: #dc3545;
@@ -12,6 +12,7 @@
             --card-bg: #ffffff;
             --text-main: #2d3436;
             --accent: #0984e3;
+            --safety-color: #e67e22;
         }
 
         body {
@@ -33,11 +34,10 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
         }
 
-        /* Styl kafelków */
         details {
             background: var(--card-bg);
             margin-bottom: 12px;
@@ -59,10 +59,6 @@
             transition: background 0.3s;
         }
 
-        summary::-webkit-details-marker {
-            display: none;
-        }
-
         summary::after {
             content: "➔";
             transition: transform 0.3s;
@@ -70,7 +66,7 @@
         }
 
         details[open] summary::after {
-            transform: rotate(90-deg);
+            transform: rotate(90deg);
         }
 
         details[open] summary {
@@ -83,7 +79,6 @@
             font-size: 0.95rem;
         }
 
-        /* Tabela wewnątrz kafelka */
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
@@ -103,9 +98,6 @@
             vertical-align: top;
         }
 
-        .pl-label { color: var(--pl-color); font-weight: bold; }
-        .de-label { color: #d39e00; font-weight: bold; }
-
         .badge {
             display: inline-block;
             padding: 2px 8px;
@@ -116,13 +108,29 @@
         }
         .badge-pl { background: #ffeef0; color: var(--pl-color); }
         .badge-de { background: #fff9db; color: #856404; }
+        .badge-hseq { background: #e8f5e9; color: #2e7d32; }
 
         .highlight {
-            background: #e1f5fe;
+            background: #fff3e0;
             padding: 10px;
-            border-left: 4px solid var(--accent);
+            border-left: 4px solid var(--safety-color);
             margin: 10px 0;
             font-size: 0.9rem;
+        }
+
+        .role-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .role-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .role-name {
+            font-weight: bold;
+            color: #0984e3;
         }
 
         strong { color: #000; }
@@ -131,127 +139,86 @@
 <body>
 
 <div class="container">
-    <h1>Gospodarka Odpadami i Prawo<br>🇵🇱 Polska vs Niemcy 🇩🇪</h1>
+    <h1>Gospodarka, Prawo i Kadry<br>🇵🇱 Polska vs Niemcy 🇩🇪</h1>
 
     <details>
         <summary>⚖️ System Prawny i Ustawy</summary>
         <div class="content">
             <div class="badge badge-pl">POLSKA</div>
-            <p>System <strong>scentralizowany</strong>. Ustawa o odpadach (2012) obowiązuje wszędzie tak samo. Rejestracja w cyfrowym systemie <strong>BDO</strong>. Zawsze zostaje nadany wytwórcy dziewiecicyfrowy XXX XXX XXX unikalny numer nadany po wpisaniu do bazy przez marszałka wojewodztwa.</p>
+            <p>System <strong>scentralizowany</strong>. Ustawa o odpadach (2012). System <strong>BDO</strong> (9-cyfrowy numer nadany przez Marszałka).</p>
             
             <div class="badge badge-de">NIEMCY</div>
-            <p>System <strong>federalny</strong>. Podstawa to <strong>KrWG</strong>, ale każdy z 16 landów ma swoje ustawy (np. SächsABG w Saksonii). <strong>Zawsze sprawdzaj prawo danego landu!</strong></p> 
-            <p>Numer wytwórcy odpadów (Abfallerzeugernummer) zostaje nadany przez lokalny urząd środowiskowy- umweltamt. Obowiazkowy tylko dla wytworców odpadów niebezpiecznych.</p>
-            <p>Przykładowy numer wytwórcy dla Berlina: <b>B 156 64236</b>. Litera B oznacza land- Berlin.</p>
-            <p><a href="https://fachbetrieberegister.zks-abfall.de/fachbetrieberegister/">Https://fachbetrieberegister.zks-abfall.de/fachbetrieberegister/</a> Tutaj wyszukujemy firmy i certyfikaty jakości EfB.</p>
-            <p>sammeln- zbieranie, beforden- transportowanie</p>
-
-            <table class="comparison-table">
-                <tr>
-                    <th>Obszar</th>
-                    <th>Polska</th>
-                    <th>Niemcy</th>
-                </tr>
-                <tr>
-                    <td>Odpady Ogólne</td>
-                    <td>Ustawa 2012</td>
-                    <td>KrWG</td>
-                </tr>
-                <tr>
-                    <td>Katalog (Kody)</td>
-                    <td>Katalog 2020</td>
-                    <td>AVV (to samo co EWC)</td>
-                </tr>
-                <tr>
-                    <td>Budowa/Przemysł</td>
-                    <td>POŚ 2001</td>
-                    <td>GewAbfV</td>
-                </tr>
-                 <tr>
-                    <td>Ochrona Przyrody</td>
-                    <td>Ustawa o Ochonie Przyrody 2004</td>
-                    <td>BNatSchG- Federalna Ustawa o Ochronie Przyrody ( Bundesnaturschutzgesetz,  </td>
-                </tr>
-            </table>
-        </div>
-    </details>
-
-    <details>
-        <summary>🏗️ Odpady Budowlane (Grupa 17)</summary>
-        <div class="content">
-            <p>Oba kraje wymagają <strong>segregacji u źródła</strong> na frakcje: drewno, plastik, szkło, metal, gips, gruz/beton. W Polsce jest to uregulowane w ustawie POŚ art. 101a o selektywnym sposobie zbierania odpadów z budowy i rozbiórki. W NIemczech całość jest regulowana przez ustawę federalną GewAbfV</p>
+            <p>System <strong>federalny (Länderrecht)</strong>. Ustawa <strong>KrWG</strong>. Numer wytwórcy (Abfallerzeugernummer) z Umweltamt (np. <i>B 156 64236</i>).</p> 
             
-            <div class="highlight">
-                <strong>Logistyka w Polsce:</strong>
-                <p>Karta KPO generowana w <strong>BDO</strong> przed każdym transportem. Podajemy masę odpadu, nr BDO firmy transportującej i odbierającej odpad, nr miesca działalności. Całość jest elektroniczna. Tablica <strong>"ODPADY"</strong> na aucie.</p>
-            </div>
-
-            <div class="highlight">
-                <strong>Logistyka w Niemczech:</strong>
-                <p>Odpady inne niż niebezpieczne: obieg papierowy. Dokument <strong>Lieferschein</strong> + kwit wagowy po utylizacji odpadu. NIe potrzeba dla odapdów innych niż niebezpieczne żadnych KPO, nie trzeba też mieć prowadzonego systemu elektronicznego. Tablica <strong>"A"</strong> (Abfall) na aucie.</p>
-            </div>
-            <p><i>Uwaga: Jeśli w Niemczech nie segregujesz u źródła, musisz udowodnić urzędowi (GewAbfV), dlaczego było to technicznie niemożliwe.</i></p>
+            <table class="comparison-table">
+                <tr><th>Polska</th><th>Niemcy</th></tr>
+                <tr><td>Ustawa o odpadach</td><td>KrWG / GewAbfV</td></tr>
+                <tr><td>Ochrona Przyrody</td><td>BNatSchG</td></tr>
+            </table>
         </div>
     </details>
 
     <details>
-        <summary>☣️ Odpady Niebezpieczne</summary>
+        <summary>👷 Hierarchia i Funkcje (Branża Elektro)</summary>
         <div class="content">
-            <div class="badge badge-pl">POLSKA - BDO</div>
-            <ul>
-                <li>Pełna ewidencja cyfrowa przed transportem. Wybór kodu odpadu z systemu z * dla obiektów liniowych. Firma musi mieć wpisaną możliwość zbierania lub przetwarzania odpadów o tym kodzie.</li>
-                <li>Weryfikacja odbiorcy po numerze rejestrowym.</li>
-            </ul>
-
-            <div class="badge badge-de">NIEMCY - eANV</div>
-            <ul>
-                <li>System <strong>eANV</strong> (portal ZKS-Abfall).</li>
-                <li>Wymagane podpisy elektroniczne (karty chipowe i PIN).</li>
-                <li><strong>Certyfikat EfB:</strong> Szukaj firm z tytułem <i>Entsorgungsfachbetrieb</i>. To gwarancja, że urzędnik szybciej zaakceptuje ilości odpadów.</li>
-                <li>Dokument: <strong>Begleitschein</strong> (odpowiednik KPO).</li>
+            <ul class="role-list">
+                <li><span class="role-name">Der Bauherr:</span> Inwestor (np. 50Hertz, TenneT, Amprion).</li>
+                <li><span class="role-name">Der Bauleiter:</span> Kierownik budowy. Odpowiada za całość prac i bezpieczeństwo.</li>
+                <li><span class="role-name">Stellvertretender Bauleiter:</span> Zastępca kierownika budowy.</li>
+                <li><span class="role-name">Der Polier:</span> Majster/Brygadzista. Kluczowa osoba zarządzająca ekipą "na dole".</li>
+                <li><span class="role-name">Der Projektleiter:</span> Kierownik projektu (zarządzanie biurowe/budżetowe).</li>
+                <li><span class="role-name">HSEQ Manager / Fachkraft für Arbeitssicherheit:</span> Inspektor BHP i Ochrony Środowiska.</li>
+                <li><span class="role-name">Der Umweltbaubegleiter (UBB):</span> Nadzór środowiskowy (pilnuje wycinek, ochrony ptaków, rekultywacji).</li>
+                <li><span class="role-name">Der Freileitungsmonteur:</span> Monter linii napowietrznych (np. 110/380 kV).</li>
+                <li><span class="role-name">Der Schaltberechtigte:</span> Osoba z uprawnieniami łączeniowymi (wysokie napięcie).</li>
+                <li><span class="role-name">Der Bauüberwacher:</span> Inspektor nadzoru (z ramienia inwestora).</li>
             </ul>
         </div>
     </details>
 
     <details>
-        <summary>💧 Prawo Wodne i Odwadnianie</summary>
+        <summary>🧗 Certyfikaty (Praca na Wysokości)</summary>
         <div class="content">
+            <div class="highlight">
+                <strong>UWAGA:</strong> Bez tych dokumentów wejście na słup 110/380 kV w Niemczech jest niemożliwe.
+            </div>
             <table class="comparison-table">
                 <tr>
-                    <th>Cecha</th>
-                    <th>Polska (Wody Polskie)</th>
-                    <th>Niemcy (UWB)</th>
+                    <th>Kod/Nazwa</th>
+                    <th>Opis</th>
                 </tr>
                 <tr>
-                    <td>Wykopy</td>
-                    <td>Zgłoszenie (do 30 dni)</td>
-                    <td><strong>Erlaubnis</strong> (niemal zawsze)</td>
+                    <td><strong>G41 (Höhentauglichkeit)</strong></td>
+                    <td>Badania lekarskie stwierdzające brak lęku wysokości i przeciwwskazań zdrowotnych.</td>
                 </tr>
                 <tr>
-                    <td>Dokument</td>
-                    <td>Operat Wodnoprawny</td>
-                    <td>Dane techniczne wpływu na lustro wody</td>
+                    <td><strong>PSAgA</strong></td>
+                    <td>Szkolenie z użycia środków ochrony osobistej przed upadkiem (Szelki, liny, amortyzatory).</td>
                 </tr>
                 <tr>
-                    <td>Decyzja</td>
-                    <td>Dyrektor Zarządu Zlewni</td>
-                    <td>Untere Wasserbehörde (Lokalnie)</td>
+                    <td><strong>Rettung aus Höhen</strong></td>
+                    <td>Certyfikat z ratownictwa wysokościowego (ratowanie kolegi z masztu).</td>
+                </tr>
+                <tr>
+                    <td><strong>EuP / EFK</strong></td>
+                    <td>Uprawnienia elektryczne (Poinstruowany / Wykwalifikowany).</td>
+                </tr>
+                <tr>
+                    <td><strong>Befähigte Person</strong></td>
+                    <td>Osoba uprawniona do przeglądu sprzętu wysokościowego.</td>
                 </tr>
             </table>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
-                *W Niemczech (np. Berlin) każda praca pomp igłofiltrowych obniżająca poziom wody poza działką wymaga pełnego pozwolenia wodnoprawnego, niezależnie od czasu trwania.
-            </p>
         </div>
     </details>
 
     <details>
-        <summary>🧹 Odpady Komunalne (Zaplecze)</summary>
+        <summary>☣️ Odpady Niebezpieczne & eANV</summary>
         <div class="content">
-            <p>Frakcje identyczne (Bio, Papier, Szkło, Plastik/Metal, Zmieszane).</p>
-            <p><strong>Różnica w umowach:</strong></p>
+            <div class="badge badge-de">NIEMCY - eANV</div>
+            <p>Obowiązkowy system elektroniczny dla odpadów niebezpiecznych.</p>
             <ul>
-                <li><strong>Niemcy:</strong> Każda budowa musi mieć umowę z gminą na min. 1 pojemnik lub z certyfikowaną firmą.</li>
-                <li><strong>Polska:</strong> Umowa z firmą wpisaną do RDR (Rejestr Działalności Regulowanej) w danej gminie + wpis w BDO.</li>
+                <li><strong>Begleitschein:</strong> Niemiecka karta przekazania odpadu (KPO).</li>
+                <li><strong>Entsorgungsfachbetrieb (EfB):</strong> Certyfikowana firma utylizacyjna.</li>
             </ul>
         </div>
     </details>
@@ -260,30 +227,11 @@
         <summary>🏛️ Instytucje (Odpowiedniki)</summary>
         <div class="content">
             <table class="comparison-table">
-                <tr>
-                    <th>Polska</th>
-                    <th>Niemcy</th>
-                </tr>
-                <tr>
-                    <td><strong>Wody Polskie</strong></td>
-                    <td>WSV (Fed.) / WWA (Land.)</td>
-                </tr>
-                <tr>
-                    <td><strong>GIOŚ / WIOŚ</strong></td>
-                    <td>UBA / LfU (Landesamt)</td>
-                </tr>
-                <tr>
-                    <td><strong>RDOŚ</strong></td>
-                    <td>Untere Naturschutzbehörde</td>
-                </tr>
-                <tr>
-                    <td><strong>Nadleśnictwo</strong></td>
-                    <td>Forstamt</td>
-                </tr>
-                <tr>
-                    <td><strong>Starostwo</strong></td>
-                    <td>Landratsamt (LRA)</td>
-                </tr>
+                <tr><th>Polska</th><th>Niemcy</th></tr>
+                <tr><td><strong>Wody Polskie</strong></td><td>WWA / UWB (Untere Wasserbehörde)</td></tr>
+                <tr><td><strong>GIOŚ / WIOŚ</strong></td><td>LUA / LfU</td></tr>
+                <tr><td><strong>RDOŚ</strong></td><td>UNB (Untere Naturschutzbehörde)</td></tr>
+                <tr><td><strong>Nadleśnictwo</strong></td><td>Forstamt</td></tr>
             </table>
         </div>
     </details>
@@ -291,8 +239,8 @@
 </div>
 
 <p style="text-align: center; color: #95a5a6; font-size: 0.8rem;">
-    Opracowano na podstawie przepisów KrWG, GewAbfV oraz Ustawy o odpadach.<br>
-    Pamiętaj o sprawdzeniu prawa landowego (Landesrecht)!
+    Branża Elektroenergetyczna 110/380 kV | KrWG, BNatSchG, VDE Normen.<br>
+    Pamiętaj o sprawdzeniu przepisów specyficznych dla danego Landu!
 </p>
 
 </body>
