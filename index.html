@@ -13,7 +13,7 @@
             --text-main: #2d3436;
             --accent: #0984e3;
             --safety: #d35400;
-            --waste: #27ae60;
+            --waste-color: #27ae60;
             --header-bg: #2c3e50;
         }
 
@@ -27,22 +27,22 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         header {
             background: var(--header-bg);
             color: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
             text-align: center;
             margin-bottom: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        h1 { margin: 0; font-size: 1.5rem; }
-        h2 { font-size: 1.1rem; color: #bdc3c7; margin-top: 5px; }
+        h1 { margin: 0; font-size: 1.6rem; }
+        h2 { font-size: 1.1rem; color: #bdc3c7; margin-top: 5px; font-weight: normal; }
 
         details {
             background: var(--card-bg);
@@ -71,22 +71,20 @@
         }
 
         details[open] summary::after { transform: rotate(180deg); }
-        details[open] summary { border-bottom: 2px solid var(--accent); background: #f8f9fa; }
+        details[open] summary { border-bottom: 2px solid var(--accent); background: #f8f9fa; border-radius: 12px 12px 0 0; }
 
         .content { padding: 20px; }
 
-        /* Tabele */
         .comp-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
+            margin: 15px 0;
             font-size: 0.9rem;
         }
 
         .comp-table th { background: #f1f2f6; text-align: left; padding: 12px; border-bottom: 2px solid #ddd; }
         .comp-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: top; }
 
-        /* Odznaki i etykiety */
         .badge {
             display: inline-block;
             padding: 3px 10px;
@@ -101,7 +99,7 @@
         .b-waste { background: #e8f5e9; color: var(--waste-color); }
         .b-safe { background: #fff3e0; color: var(--safety); }
 
-        .role-name { font-weight: bold; color: var(--accent); display: block; }
+        .role-name { font-weight: bold; color: var(--accent); display: block; margin-top: 10px; }
         .role-desc { font-size: 0.85rem; color: #636e72; display: block; margin-bottom: 8px; }
 
         .highlight-box {
@@ -112,9 +110,18 @@
             border-radius: 0 8px 8px 0;
         }
 
-        .code-num { font-family: 'Courier New', monospace; font-weight: bold; color: #2980b9; }
+        .code-num { font-family: 'Courier New', monospace; font-weight: bold; color: #2980b9; white-space: nowrap; }
+        
+        .color-dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+        }
 
-        footer { text-align: center; padding: 20px; color: #7f8c8d; font-size: 0.8rem; }
+        footer { text-align: center; padding: 30px; color: #7f8c8d; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -122,7 +129,7 @@
 <div class="container">
     <header>
         <h1>Branża Elektroenergetyczna (110/380 kV)</h1>
-        <h2>Kompleksowy Przewodnik: Prawo, Kadry i Odpady</h2>
+        <h2>Kompleksowe Kompendium: PL vs DE – Prawo, Kadry i Odpady</h2>
     </header>
 
     <details open>
@@ -177,9 +184,10 @@
         <summary>⚖️ Prawo Odpadowe i Wodne: PL vs DE</summary>
         <div class="content">
             <div class="badge b-pl">Polska</div>
-            <p>System <strong>BDO</strong> (cyfrowy). Numer rejestrowy XXX XXX XXX. Wszystko w chmurze przed transportem.</p>
+            <p>System <strong>BDO</strong> (cyfrowy). Numer rejestrowy XXX XXX XXX. Wszystko w chmurze przed transportem. KPO generowana przed każdym transportem. System bezpapierowy – transportujący i przejmujący zamykają kartę w systemie.</p>
+            
             <div class="badge b-de">Niemcy</div>
-            <p>Podstawa to <strong>KrWG</strong> (Ustawa o obiegu zamkniętym) oraz <strong>GewAbfV</strong> (Odpady komercyjne/budowlane). Systemy landowe (różne przepisy w Bawarii, różne w Berlinie).</p>
+            <p>Podstawa to <strong>KrWG</strong> (Ustawa o obiegu zamkniętym) oraz <strong>GewAbfV</strong>. Odpady zwykłe (np. gruz 17 01 01) obsługiwane są papierowo (Lieferschein). Wymagane sprawdzenie czy firma posiada <strong>Erlaubnis</strong> na zbieranie i transport.</p>
             
             <table class="comp-table">
                 <tr><th>Obszar</th><th>Polska (Instytucja)</th><th>Niemcy (Instytucja)</th></tr>
@@ -192,27 +200,127 @@
     </details>
 
     <details>
-        <summary>♻️ Katalog Odpadów (Grupa 17 i Komunalne)</summary>
+        <summary>♻️ Katalog Odpadów Budowlanych (Grupa 17)</summary>
         <div class="content">
-            <h3>Odpady Budowlane (Bauabfälle)</h3>
+            <h3>Odpady z Budowy Linii (Bauabfälle)</h3>
             <table class="comp-table">
                 <tr><th>Kod AVV</th><th>Nazwa Niemiecka</th><th>Przykłady</th></tr>
-                <tr><td><span class="code-num">17 01 01</span></td><td><strong>Beton</strong></td><td>Fundamenty, słupy betonowe, resztki betonu towarowego.</td></tr>
-                <tr><td><span class="code-num">17 04 05</span></td><td><strong>Eisen und Stahl</strong></td><td>Elementy masztów, zbrojenie, śruby, podkładki.</td></tr>
-                <tr><td><span class="code-num">17 04 11</span></td><td><strong>Kabel</strong></td><td>Stare przewody, resztki kabli z bębnów, linki Al/Cu.</td></tr>
-                <tr><td><span class="code-num">17 02 03</span></td><td><strong>Kunststoff</strong></td><td>Rury osłonowe, izolatory kompozytowe, folie PE.</td></tr>
-                <tr><td><span class="code-num">17 05 04</span></td><td><strong>Boden und Steine</strong></td><td>Ziemia z wykopów pod fundamenty (niezanieczyszczona).</td></tr>
-                <tr><td><span class="code-num">17 09 04</span></td><td><strong>Gemischte Bauabfälle</strong></td><td>Odpady zmieszane (np. styropian + drewno + brudny plastik).</td></tr>
+                <tr><td><span class="code-num">17 01 01</span></td><td><strong>Beton</strong></td><td>Fundamenty, słupy betonowe, resztki betonu.</td></tr>
+                <tr><td><span class="code-num">17 04 05</span></td><td><strong>Eisen und Stahl</strong></td><td>Elementy masztów, zbrojenie, śruby.</td></tr>
+                <tr><td><span class="code-num">17 04 11</span></td><td><strong>Kabel</strong></td><td>Stare przewody, resztki kabli, linki Al/Cu.</td></tr>
+                <tr><td><span class="code-num">17 02 03</span></td><td><strong>Kunststoff</strong></td><td>Rury osłonowe, izolatory kompozytowe.</td></tr>
+                <tr><td><span class="code-num">17 05 04</span></td><td><strong>Boden und Steine</strong></td><td>Ziemia z wykopów (czysta).</td></tr>
+                <tr><td><span class="code-num">17 09 04</span></td><td><strong>Gemischte Bauabfälle</strong></td><td>Odpady zmieszane (styropian, drewno, folie).</td></tr>
+            </table>
+        </div>
+    </details>
+
+    <details>
+        <summary>🏠 Rozbudowany Katalog Odpadów Komunalnych (Grupa 20)</summary>
+        <div class="content">
+            <div class="highlight-box">
+                <strong>Zasada Dokumentacji (Dokumentationspflicht):</strong> Zgodnie z GewAbfV, na budowie należy dokumentować segregację. Jeśli odpady są zbierane jako zmieszane (20 03 01), należy uzasadnić brak możliwości technicznej segregacji.
+            </div>
+
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th>Kod AVV</th>
+                        <th>Nazwa Niemiecka</th>
+                        <th>Miejsce / Kolor Kosza</th>
+                        <th>Przykłady</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="code-num">20 03 01</span></td>
+                        <td><strong>Gemischter Siedlungsabfall</strong></td>
+                        <td><span class="color-dot" style="background:#000;"></span> <strong>Restmüll (Czarny)</strong></td>
+                        <td>Odpady resztkowe, art. higieniczne, niedopałki, zabrudzony papier, worki z odkurzacza.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 01</span></td>
+                        <td><strong>Papier und Pappe</strong></td>
+                        <td><span class="color-dot" style="background:#00f;"></span> <strong>Altpapier (Niebieski)</strong></td>
+                        <td>Czyste kartony, prospekty, gazety, papier biurowy, tektura.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 02</span></td>
+                        <td><strong>Glas (Altglas)</strong></td>
+                        <td><span class="color-dot" style="background:#fff; border: 1px solid #000;"></span> <strong>Szkło (Białe/Ziel/Brąz)</strong></td>
+                        <td>Butelki bezzwrotne, słoiki. (Należy sortować kolorami do odpowiednich kontenerów).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 08</span></td>
+                        <td><strong>Bioabfälle</strong></td>
+                        <td><span class="color-dot" style="background:#5d4037;"></span> <strong>Biomüll (Brązowy)</strong></td>
+                        <td>Resztki jedzenia, obierki, fusy z kawy, odpady organiczne z kuchni bazy.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 39</span></td>
+                        <td><strong>Kunststoffe</strong></td>
+                        <td><span class="color-dot" style="background:#ffeb3b;"></span> <strong>Gelber Sack (Żółty)</strong></td>
+                        <td>Opakowania plastikowe, kubeczki, folie (niekaucjonowane).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 40</span></td>
+                        <td><strong>Metalle</strong></td>
+                        <td><span class="color-dot" style="background:#ffeb3b;"></span> <strong>Gelber Sack (Żółty)</strong></td>
+                        <td>Puszki po konserwach, kapsle, wieczka aluminiowe.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 10</span></td>
+                        <td><strong>Bekleidung</strong></td>
+                        <td><strong>Altkleider</strong></td>
+                        <td>Zużyta odzież, tekstylia (niezanieczyszczone chemią).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 21*</span></td>
+                        <td><strong>Leuchtstoffröhren</strong></td>
+                        <td><strong>Sammelbox (Niebezpieczny)</strong></td>
+                        <td>Zużyte świetlówki, lampy energooszczędne.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 33*</span></td>
+                        <td><strong>Batterien und Akkus</strong></td>
+                        <td><strong>Sammelbox (Niebezpieczny)</strong></td>
+                        <td>Baterie, akumulatorki z urządzeń przenośnych.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 01 35*</span></td>
+                        <td><strong>Elektronikschrott</strong></td>
+                        <td><strong>Elektroaltgeräte</strong></td>
+                        <td>Zepsute monitory, laptopy, czajniki, elektronarzędzia.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 02 01</span></td>
+                        <td><strong>Biologisch abbaubare Abfälle</strong></td>
+                        <td><strong>Grünschnitt</strong></td>
+                        <td>Odpady zielone z bazy (trawa, liście, gałęzie).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">20 03 07</span></td>
+                        <td><strong>Sperrmüll</strong></td>
+                        <td><strong>Kontener gabarytowy</strong></td>
+                        <td>Wielkogabarytowe: stare meble biurowe, materace, dywany.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="code-num">15 01 01</span></td>
+                        <td><strong>Verpackungen aus Papier</strong></td>
+                        <td><strong>Altpapier</strong></td>
+                        <td>Opakowania wielomateriałowe (część papierowa).</td>
+                    </tr>
+                </tbody>
             </table>
 
-            <h3>Odpady Komunalne i Zaplecze (Siedlungsabfälle)</h3>
-            <table class="comp-table">
-                <tr><th>Kod AVV</th><th>Nazwa Niemiecka</th><th>Przykłady</th></tr>
-                <tr><td><span class="code-num">20 03 01</span></td><td><strong>Gemischter Siedlungsabfall</strong></td><td>Odpady zmieszane z kontenerów socjalnych (resztki jedzenia itp.).</td></tr>
-                <tr><td><span class="code-num">15 01 01</span></td><td><strong>Papier und Pappe</strong></td><td>Opakowania kartonowe, dokumentacja papierowa.</td></tr>
-                <tr><td><span class="code-num">20 01 08</span></td><td><strong>Bioabfälle</strong></td><td>Odpady kuchenne z bazy budowy.</td></tr>
-            </table>
-            <p><i>*Uwaga: W Niemczech zgodnie z <strong>GewAbfV</strong> musisz prowadzić dokumentację (Dokumentationspflicht), dlaczego nie segregujesz odpadów, jeśli wrzucasz je do zmieszanych (17 09 04).</i></p>
+            <div class="highlight-box" style="background: #fff3e0; border-left-color: #ff9800;">
+                <strong>Uwagi praktyczne dla pracowników:</strong>
+                <ul>
+                    <li><strong>PFAND (Kaucja):</strong> Butelki PET i puszki z symbolem kaucji (0,25€) nie trafiają do żółtego kosza! Oddajemy je do automatów w sklepie.</li>
+                    <li><strong>Porcelana/Ceramika:</strong> Absolutny zakaz wrzucania do szkła (Altglas). Trafiają do Restmüll lub gruzu.</li>
+                    <li><strong>Bioabfall:</strong> Nigdy nie wrzucaj resztek jedzenia w plastikowych workach do brązowego kosza (chyba że są kompostowalne).</li>
+                </ul>
+            </div>
         </div>
     </details>
 
